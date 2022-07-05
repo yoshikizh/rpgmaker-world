@@ -3,6 +3,7 @@
 //=============================================================================
 
 const scriptUrls = [
+    "js/init.js",
     "js/config/game.config.js",
     "js/libs/pixi.js",
     "js/libs/pako.min.js",

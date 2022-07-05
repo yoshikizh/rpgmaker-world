@@ -460,7 +460,7 @@ Scene_Title.prototype.drawGameTitle = function() {
   bitmap.fontFace = $gameSystem.mainFontFace();
   bitmap.outlineColor = "black";
   bitmap.outlineWidth = 8;
-  bitmap.fontSize = 72;
+  bitmap.fontSize = dp(60);
   bitmap.drawText(text, x, y, maxWidth, 48, "center");
 };
 

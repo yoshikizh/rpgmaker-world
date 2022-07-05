@@ -1,10 +1,10 @@
 [
 null,
-{"id":1,"expanded":true,"name":"MAP001","order":1,"parentId":0,"scrollX":803.25,"scrollY":948.75},
-{"id":2,"expanded":true,"name":"大堂","order":4,"parentId":0,"scrollX":803.25,"scrollY":948.75},
-{"id":3,"expanded":true,"name":"雪中要塞","order":2,"parentId":0,"scrollX":834.75,"scrollY":960.75},
+{"id":1,"expanded":true,"name":"MAP001","order":1,"parentId":0,"scrollX":729.2727272727273,"scrollY":508.90909090909093},
+{"id":2,"expanded":true,"name":"大堂","order":4,"parentId":0,"scrollX":729.2727272727273,"scrollY":931.0909090909091},
+{"id":3,"expanded":true,"name":"雪中要塞","order":2,"parentId":0,"scrollX":835.0909090909091,"scrollY":960.5454545454546},
 {"id":4,"expanded":false,"name":"教堂","order":5,"parentId":0,"scrollX":803.25,"scrollY":948.75},
-{"id":5,"expanded":false,"name":"防具商店","order":3,"parentId":0,"scrollX":815.25,"scrollY":948.75},
+{"id":5,"expanded":false,"name":"防具商店","order":3,"parentId":0,"scrollX":729.2727272727273,"scrollY":508.90909090909093},
 null,
 {"id":7,"expanded":false,"name":"世界地图 1","order":6,"parentId":0,"scrollX":1403.25,"scrollY":948.75}
 ]

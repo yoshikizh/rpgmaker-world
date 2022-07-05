@@ -3,7 +3,7 @@ class SceneBattleSlg {
     constructor(sceneMap){
         this.sceneMap = sceneMap
         this._spriteGrid = new SpriteSlgGrids()
-        this._windowBattleStatus = new WindowBattleStatus(new Rectangle(0,0,Config.width, parseInt(Config.height / 6) ))
+        this._windowBattleStatus = new WindowBattleStatus(new Rectangle(0,0,Config.width, dp(200) ))
         this.sceneMap._spriteset._tilemap.addChild(this._spriteGrid)
         this.sceneMap.addWindow(this._windowBattleStatus)
         this.initialize()

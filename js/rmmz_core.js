@@ -1267,7 +1267,7 @@ Bitmap.prototype.initialize = function(width, height) {
      *
      * @type string
      */
-    this.outlineColor = "rgba(0, 0, 0, 0.5)";
+    this.outlineColor = "rgba(0, 0, 0, 1)";
 
     /**
      * The width of the outline of the text.
@@ -1690,9 +1690,13 @@ Bitmap.prototype.drawCircle = function(x, y, radius, color) {
  * @param {number} lineHeight - The height of the text line.
  * @param {string} align - The alignment of the text.
  */
-Bitmap.prototype.drawText = function(text, x, y, maxWidth, lineHeight, align) {
+Bitmap.prototype.drawText = function(text, x, y, maxWidth, lineHeight, align, drawOutline = true) {
     // [Note] Different browser makes different rendering with
     //   textBaseline == 'top'. So we use 'alphabetic' here.
+
+    this.fontFace = $gameSystem.mainFontFace();
+    this.fontBold = true
+
     const context = this.context;
     const alpha = context.globalAlpha;
     maxWidth = maxWidth || 0xffffffff;
@@ -1709,7 +1713,11 @@ Bitmap.prototype.drawText = function(text, x, y, maxWidth, lineHeight, align) {
     context.textAlign = align;
     context.textBaseline = "alphabetic";
     context.globalAlpha = 1;
-    this._drawTextOutline(text, tx, ty, maxWidth);
+
+    if (drawOutline){
+        this._drawTextOutline(text, tx, ty, maxWidth);
+    }
+
     context.globalAlpha = alpha;
     this._drawTextBody(text, tx, ty, maxWidth);
     context.restore();
@@ -1759,6 +1767,8 @@ Bitmap.prototype._makeFontNameText = function() {
 
 Bitmap.prototype._drawTextOutline = function(text, tx, ty, maxWidth) {
     const context = this.context;
+    var scale = window.devicePixelRatio;
+    // this._context.scale(parseFloat(1/scale), parseFloat(1/scale));
     context.strokeStyle = this.outlineColor;
     context.lineWidth = this.outlineWidth;
     context.lineJoin = "round";
@@ -1766,7 +1776,9 @@ Bitmap.prototype._drawTextOutline = function(text, tx, ty, maxWidth) {
 };
 
 Bitmap.prototype._drawTextBody = function(text, tx, ty, maxWidth) {
+    var scale = window.devicePixelRatio;
     const context = this.context;
+    // context.scale(parseFloat(1/scale), parseFloat(1/scale));
     context.fillStyle = this.textColor;
     context.fillText(text, tx, ty, maxWidth);
 };
@@ -1774,10 +1786,38 @@ Bitmap.prototype._drawTextBody = function(text, tx, ty, maxWidth) {
 Bitmap.prototype._createCanvas = function(width, height) {
     this._canvas = document.createElement("canvas");
     this._context = this._canvas.getContext("2d");
+
+    // this._canvas.style.width = width + "px";
+    // this._canvas.style.height = height + "px";
+
+    var scale = window.devicePixelRatio;
     this._canvas.width = width;
+    // this._canvas.width = Math.floor(width * scale);
     this._canvas.height = height;
+    // this._canvas.height = Math.floor(height * scale);
+    // this._context.scale(scale, scale);
+
     this._createBaseTexture(this._canvas);
+
+    // this.fixScale()
 };
+
+Bitmap.prototype.fixScale = function() {
+    if (this.scaled) return
+    const width = this.width
+    const height = this.height
+    console.log(width, height)
+
+    this._canvas.style.width = width + "px";
+    this._canvas.style.height = height + "px";
+
+    var scale = window.devicePixelRatio;
+    this._canvas.width = Math.floor(width * scale);
+    this._canvas.height = Math.floor(height * scale);
+    this._context.scale(scale, scale);
+    this.scaled = true
+}
+
 
 Bitmap.prototype._ensureCanvas = function() {
     if (!this._canvas) {
