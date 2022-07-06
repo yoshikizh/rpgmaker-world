@@ -5,11 +5,12 @@ class SceneBattleSlg {
     this._spriteGrid = new SpriteSlgGrids()
     this._windowBattleStatus = new WindowBattleStatus(new Rectangle(0,0,Config.width, dp(200)))
     this._spritesetBattleActorUseSkillButtons = new SpritesetBattleActorUseSkillButtons()
+
     this.sceneMap._spriteset._tilemap.addChild(this._spriteGrid)
     this.sceneMap.addWindow(this._windowBattleStatus)
     this.sceneMap.addWindow(this._spritesetBattleActorUseSkillButtons)
 
-    this.actorMoveEffect = new AnimationSpriteEffect()
+    this.actorBlendEffect = new AnimationSpriteEffect()
 
     this.initialize()
   }
@@ -79,6 +80,9 @@ class SceneBattleSlg {
     if (!this._activeActor){
       return
     }
+    if (this.actorBlendEffect.isBlank()){
+      this.actorBlendEffect.setEffectBlendFlash(this.sceneMap.findEventSprite(this._activeActor))
+    }
     if (this._spriteGrid.isBlank()){
       const screenX = this._activeActor.screenX()
       const screenY = this._activeActor.screenY()
@@ -87,28 +91,28 @@ class SceneBattleSlg {
       this._spriteGrid.createGrids(screenX, screenY, moveDistance)
       this._activeActor.battler.actionStatus = "pending"
     }
+    this.updateActiveActorBlendEffect()
     this.updateActorMoveGrid()
     this.updateMoveTouch()
     this.updateMoving()
     this.updateMoveOver()
   }
 
+  updateActiveActorBlendEffect(){
+    console.log(this.actorBlendEffect.blendFlashAlpha)
+    this.actorBlendEffect.update()
+  }
+
   // 更新移动结束
   updateMoveOver(){
     if (this._activeActor.battler.actionStatus === "moveOver"){
-      this.actorMoveEffect.update()
+      
     }
   }
 
   // 更新移动
   updateMoving(){
     if (this._activeActor.battler.actionStatus === "moving"){
-
-      this.actorMoveEffect.update()
-      // this.sceneMap.findEventSprite(this._activeActor).setBlendColor([255,255,255,255])
-
-
-
       if (this._activeActor.isMoving()){
         return
       }
@@ -147,8 +151,6 @@ class SceneBattleSlg {
           if (canMove){
             this._activeActor.battler.actionStatus = "moving"
             this._activeActor.battler.moveTargetGrid = [x,y]
-
-            this.actorMoveEffect.setEffectBlendFlash(this.sceneMap.findEventSprite(this._activeActor))
             // this._spriteGrid.hideGrids()
           } else {
             console.log("can not move",x,y)
