@@ -34,7 +34,7 @@ class SceneBattleSlg {
 
   // 寻找攻击对象
   findAttackTarget(){
-    
+
   }
 
   start(){
@@ -155,7 +155,7 @@ class SceneBattleSlg {
         if (TouchInput.isPressed() && !this.sceneMap.isAnyButtonPressed()) {
           const x = $gameMap.canvasToMapX(TouchInput.x)
           const y = $gameMap.canvasToMapY(TouchInput.y)
-          const allMovePos = this._spriteGrid.spGrids.map(sp=>[$gameMap.canvasToMapX(sp.x), $gameMap.canvasToMapY(sp.y)])
+          const allMovePos = this._spriteGrid.spGrids.filter(sp => !sp.attackSprite).map(sp=>[$gameMap.canvasToMapX(sp.x), $gameMap.canvasToMapY(sp.y)])
           const canMove = allMovePos.some(arr => arr[0] === x && arr[1] === y)
           if (canMove){
             this._activeActor.battler.actionStatus = "moving"

@@ -67,10 +67,12 @@ class SpriteSlgGrids extends Sprite {
           sprite.positionI = i
           sprite.positionJ = j
           sprite.z = 0
+          sprite.attackSprite = false
 
           const leftRange = -(totalRange-j)
           const rightRange = totalRange-j
           if ((i >= leftRange && i <= leftRange + atkRange - 1) || (i <= rightRange && i >= rightRange - atkRange + 1)){
+            sprite.attackSprite = true
             sprite.setBlendColor([255,0,0,128])
           }
 
@@ -92,10 +94,12 @@ class SpriteSlgGrids extends Sprite {
           sprite.positionI = i
           sprite.positionJ = j
           sprite.z = 0
+          sprite.attackSprite = false
 
           const leftRange = -(totalRange-j)
           const rightRange = totalRange-j
           if ((i >= leftRange && i <= leftRange + atkRange - 1) || (i <= rightRange && i >= rightRange - atkRange + 1)){
+            sprite.attackSprite = true
             sprite.setBlendColor([255,0,0,128])
           }
 
