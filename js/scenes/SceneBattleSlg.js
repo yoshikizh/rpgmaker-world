@@ -6,7 +6,7 @@ class SceneBattleSlg {
     this._windowBattleStatus = new WindowBattleStatus(new Rectangle(0,0,Config.width, dp(200)))
     this._spritesetBattleActorUseSkillButtons = new SpritesetBattleActorUseSkillButtons()
 
-    this._spritesetBattleAttckTarget = 
+    // this._spritesetBattleAttckTarget = 
 
     this.sceneMap._spriteset._tilemap.addChild(this._spriteGrid)
     this.sceneMap.addWindow(this._windowBattleStatus)
@@ -25,8 +25,16 @@ class SceneBattleSlg {
     this._activeEnemy = null    // 当前行动 Enemy
     this._actionSide = null     // 行动方向 actor, enemy
     // this._moveSpGrids = []      // 移动格子 sprites
+  }
 
+  // 创建攻击对象
+  createAttackSprite(){
 
+  }
+
+  // 寻找攻击对象
+  findAttackTarget(){
+    
   }
 
   start(){
