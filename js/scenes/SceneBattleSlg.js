@@ -6,6 +6,8 @@ class SceneBattleSlg {
     this._windowBattleStatus = new WindowBattleStatus(new Rectangle(0,0,Config.width, dp(200)))
     this._spritesetBattleActorUseSkillButtons = new SpritesetBattleActorUseSkillButtons()
 
+    this._spritesetBattleAttckTarget = 
+
     this.sceneMap._spriteset._tilemap.addChild(this._spriteGrid)
     this.sceneMap.addWindow(this._windowBattleStatus)
     this.sceneMap.addWindow(this._spritesetBattleActorUseSkillButtons)
@@ -99,7 +101,6 @@ class SceneBattleSlg {
   }
 
   updateActiveActorBlendEffect(){
-    console.log(this.actorBlendEffect.blendFlashAlpha)
     this.actorBlendEffect.update()
   }
 
