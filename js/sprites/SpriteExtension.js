@@ -3,7 +3,8 @@ var _SpriteUpdate = Sprite.prototype.update;
 // 来回旋转动画
 Sprite.prototype.applyRotateBackAndForth = function(options = {}){
   this.exAnimationOptions = options
-  this.exEffectType = "rotateBackAndForth"
+  this.enableExAnimation = true
+  this.enableAnimationRotateBackAndForth = true
   const minAngle = options.minAngle || -5
   const maxAngle = options.maxAngle || 5
   const speed = options.speed || 0.3
@@ -29,11 +30,11 @@ Sprite.prototype.updateExRotateBackAndForth = function(){
   }
 }
 
-
 // 混合颜色动画
 Sprite.prototype.applyAnimationBlend = function(options = {}){
   this.exAnimationOptions = options
-  this.exEffectType = "blendFlash"
+  this.enableExAnimation = true
+  this.enableAnimationBlend = true
   this.exBlendColor = options.color || [255,255,255]
   this.exBlendFlashSpeed = options.speed || 5
   this.exBlendFlashMinAlpha = options.minAlpha || 0
@@ -58,19 +59,21 @@ Sprite.prototype.updateExBlendFlash = function(){
   this.setBlendColor([...this.exBlendColor, this.exBlendFlashAlpha])
 }
 
-// Sprite.prototype.clearExAnimation = function(){
-//   this.exEffectType = null
-//   this.opacity = 255
-//   this.setBlendColor([255,255,255,0])
-//   this.rotation = 0
-// }
+Sprite.prototype.clearExAnimation = function(){
+  this.enableExAnimation = false
+  this.opacity = 255
+  this.setBlendColor([255,255,255,0])
+  this.rotation = 0
+}
 
 Sprite.prototype.update = function() {
   _SpriteUpdate.call(this);
-  if (this.exEffectType === "blendFlash"){
-    this.updateExBlendFlash()
-  }
-  if (this.exEffectType === "rotateBackAndForth"){
-    this.updateExRotateBackAndForth()
+  if (this.enableExAnimation){
+    if (this.enableAnimationBlend){
+      this.updateExBlendFlash()
+    }
+    if (this.enableAnimationRotateBackAndForth){
+      this.updateExRotateBackAndForth()
+    }
   }
 }
