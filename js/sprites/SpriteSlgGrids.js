@@ -111,6 +111,25 @@ class SpriteSlgGrids extends Sprite {
     }
   )}
 
+  // displayAttackTipSprite(pos){
+  //   const bitmap = ImageManager.loadSystem("Buttons/common")
+  //   bitmap.addLoadListener(() => {
+  //     pos.forEach((arr) => {
+  //       const sprite = new Sprite()
+  //       sprite.bitmap = new Bitmap(48,48)
+  //       sprite.bitmap.blt(bitmap,0,0,48,48,0,0,48,48)
+  //       sprite.anchor.x = 0.5
+  //       sprite.anchor.y = 1
+  //       sprite.x = arr[0]
+  //       sprite.y = arr[1]
+  //       sprite.opacity = 128
+  //       sprite.z = 1.1
+  //       this.spAtkTipSprites.push(sprite)
+  //       this.addChild(sprite)
+  //     })
+  //   })
+  // }
+
   destroy(){
     super.destroy()
     this.spBitmap.destroy()

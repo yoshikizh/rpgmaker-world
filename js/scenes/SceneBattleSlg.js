@@ -5,14 +5,12 @@ class SceneBattleSlg {
     this._spriteGrid = new SpriteSlgGrids()
     this._windowBattleStatus = new WindowBattleStatus(new Rectangle(0,0,Config.width, dp(200)))
     this._spritesetBattleActorUseSkillButtons = new SpritesetBattleActorUseSkillButtons()
-
-    // this._spritesetBattleAttckTarget = 
+    this._spriteAttackRangeTip = new SpriteAttackRangeTip()
 
     this.sceneMap._spriteset._tilemap.addChild(this._spriteGrid)
     this.sceneMap.addWindow(this._windowBattleStatus)
     this.sceneMap.addWindow(this._spritesetBattleActorUseSkillButtons)
-
-    this.actorBlendEffect = new AnimationSpriteEffect()
+    this.sceneMap.addWindow(this._spriteAttackRangeTip)
 
     this.initialize()
   }
@@ -68,6 +66,10 @@ class SceneBattleSlg {
     // }
   }
 
+  getActiveActorSprite(){
+    return this.sceneMap.findEventSprite(this._activeActor)
+  }
+
   // 更新行动
   updateAction(){
     if (this._actionSide === "actor"){
@@ -83,34 +85,48 @@ class SceneBattleSlg {
     this.updateActiveActor()
   }
 
-  // 更新 active 的 actor 行动
-  updateActiveActor(){
+  // 设置 activeActor
+  setActiveActor(){
+    // 默认第一人先行动
+    $gameParty.members()[0].active = true
     this._activeActor = this.actors().find(actor => actor.battler.active)
     this._activeActor._moveSpeed = 5
+    this.getActiveActorSprite().applyAnimationBlend()
+  }
+
+  // 更新 active 的 actor 行动
+  updateActiveActor(){
+    // this._activeActor = this.actors().find(actor => actor.battler.active)
+    // this._activeActor._moveSpeed = 5
     if (!this._activeActor){
       return
     }
-    if (this.actorBlendEffect.isBlank()){
-      this.actorBlendEffect.setEffectBlendFlash(this.sceneMap.findEventSprite(this._activeActor))
-    }
+    // if (this.actorBlendEffect.isBlank()){
+    //   this.actorBlendEffect.setEffectBlendFlash(this.sceneMap.findEventSprite(this._activeActor))
+    // }
+    // this.sceneMap.findEventSprite(this._activeActor).applyAnimationBlend()
+
+
     if (this._spriteGrid.isBlank()){
       const screenX = this._activeActor.screenX()
       const screenY = this._activeActor.screenY()
       const moveDistance = $dataSlgActors[this._activeActor.battler._actorId].moveDistance
 
       this._spriteGrid.createGrids(screenX, screenY, moveDistance)
+      // this._spriteGrid.displayAttackTipSprite([[screenX+2*48, screenY]])
+      this._spriteAttackRangeTip.createAtkTip([$gameMap.enemyEvents()[1]])
       this._activeActor.battler.actionStatus = "pending"
     }
-    this.updateActiveActorBlendEffect()
+    // this.updateActiveActorBlendEffect()
     this.updateActorMoveGrid()
     this.updateMoveTouch()
     this.updateMoving()
     this.updateMoveOver()
   }
 
-  updateActiveActorBlendEffect(){
-    this.actorBlendEffect.update()
-  }
+  // updateActiveActorBlendEffect(){
+  //   this.actorBlendEffect.update()
+  // }
 
   // 更新移动结束
   updateMoveOver(){
@@ -189,6 +205,7 @@ class SceneBattleSlg {
     const actorEvents = $gameMap.actorEvents()
     const playingAnimations = actorEvents.some(event => event.isAnimationPlaying())
     if (!playingAnimations){
+      this.setActiveActor()
       this._battlePhase = 2
     }
   }
