@@ -47,13 +47,14 @@ class SpriteSlgGrids extends Sprite {
   }
 
   // 创建移动范围的格子
-  createGrids(centerX, centerY, range){
+  createGrids(centerX, centerY, moveRange, atkRange=1){
+    const totalRange = moveRange + atkRange
     this.setCenter(centerX, centerY)
     const bitmapGrid = ImageManager.loadSystem("grid1")
     bitmapGrid.addLoadListener(() => {
       this.spBitmap.blt(bitmapGrid, 0,0,bitmapGrid.width, bitmapGrid.height, 0,0,48,48)
-      for (var j = 0; j <= range; j++){
-        for (var i = -(range-j); i <= range-j; i++){
+      for (var j = 0; j <= totalRange; j++){
+        for (var i = -(totalRange-j); i <= totalRange-j; i++){
           const sprite = new Sprite()
           sprite.bitmap = this.spBitmap
           sprite.anchor.x = 0.5
@@ -66,12 +67,21 @@ class SpriteSlgGrids extends Sprite {
           sprite.positionI = i
           sprite.positionJ = j
           sprite.z = 0
+          sprite.attackSprite = false
+
+          const leftRange = -(totalRange-j)
+          const rightRange = totalRange-j
+          if ((i >= leftRange && i <= leftRange + atkRange - 1) || (i <= rightRange && i >= rightRange - atkRange + 1)){
+            sprite.attackSprite = true
+            sprite.setBlendColor([255,0,0,128])
+          }
+
           this.spGrids.push(sprite)
           this.addChild(sprite)
         }
       }
-      for (var j = 1; j <= range; j++){
-        for (var i = -(range-j); i <= range-j; i++){
+      for (var j = 1; j <= totalRange; j++){
+        for (var i = -(totalRange-j); i <= totalRange-j; i++){
           const sprite = new Sprite()
           sprite.bitmap = this.spBitmap
           sprite.anchor.x = 0.5
@@ -84,6 +94,15 @@ class SpriteSlgGrids extends Sprite {
           sprite.positionI = i
           sprite.positionJ = j
           sprite.z = 0
+          sprite.attackSprite = false
+
+          const leftRange = -(totalRange-j)
+          const rightRange = totalRange-j
+          if ((i >= leftRange && i <= leftRange + atkRange - 1) || (i <= rightRange && i >= rightRange - atkRange + 1)){
+            sprite.attackSprite = true
+            sprite.setBlendColor([255,0,0,128])
+          }
+
           this.spGrids.push(sprite)
           this.addChild(sprite)
         }
@@ -91,6 +110,25 @@ class SpriteSlgGrids extends Sprite {
       bitmapGrid.destroy()
     }
   )}
+
+  // displayAttackTipSprite(pos){
+  //   const bitmap = ImageManager.loadSystem("Buttons/common")
+  //   bitmap.addLoadListener(() => {
+  //     pos.forEach((arr) => {
+  //       const sprite = new Sprite()
+  //       sprite.bitmap = new Bitmap(48,48)
+  //       sprite.bitmap.blt(bitmap,0,0,48,48,0,0,48,48)
+  //       sprite.anchor.x = 0.5
+  //       sprite.anchor.y = 1
+  //       sprite.x = arr[0]
+  //       sprite.y = arr[1]
+  //       sprite.opacity = 128
+  //       sprite.z = 1.1
+  //       this.spAtkTipSprites.push(sprite)
+  //       this.addChild(sprite)
+  //     })
+  //   })
+  // }
 
   destroy(){
     super.destroy()

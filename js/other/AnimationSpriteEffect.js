@@ -19,13 +19,6 @@ class AnimationSpriteEffect {
     this.blendFlashAlpha = 0
     this.blendFlashAlphaDir = "up"
   }
-
-  update(){
-    if (this.effectType = "blendFlash"){
-      this.updateBlendFlash()
-    }
-  }
-
   updateBlendFlash(){
     if (this.blendFlashAlphaDir === "down"){
       this.blendFlashAlpha -= this.blendFlashSpeed
@@ -41,5 +34,13 @@ class AnimationSpriteEffect {
     }
     this.sprite.setBlendColor([...this.blendColor, this.blendFlashAlpha])
   }
+
+  update(){
+    if (this.effectType = "blendFlash"){
+      this.updateBlendFlash()
+    }
+  }
+
+
 }
 

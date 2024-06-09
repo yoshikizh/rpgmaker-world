@@ -24,6 +24,7 @@ const scriptUrls = [
     "js/sprites/SpritePlayerInfo.js",
     "js/sprites/SpriteSlgGrids.js",
     "js/sprites/spritesetBattleActorUseSkillButtons.js",
+    "js/sprites/SpriteAttackRangeTip.js",
     "js/windows/WindowBaseClickable.js",
     "js/windows/WindowBattleStatus.js",
     "js/scenes/Scene_Map.js",
