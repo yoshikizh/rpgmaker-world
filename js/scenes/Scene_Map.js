@@ -70,32 +70,34 @@ Scene_Map.prototype.updateWorldMapScrollTouch = function() {
       const nowTriggerX = TouchInput._x
       const nowTriggerY = TouchInput._y
 
-      const speed = 8
-      const gridWidth = 48
+      const moveSpeed = 0.4
+      const moveMinDistance = 4
 
       // scroll left
       if (nowTriggerX > this.triggerX ) {
         const distance = nowTriggerX - this.triggerX
-        if (distance > gridWidth){
+        if (distance > moveMinDistance){
           // const nowX = SceneManager._scene._spriteset._tilemap.origin.x - distance
           // SceneManager._scene._spriteset._tilemap.origin.x = nowX
           // if (nowX % 48 === 0){
           //     $gameMap.startScroll(6,1,10)
           // }
-          $gameMap.startScroll(4,1,10)
+          // $gameMap.startScroll(4,1,10)
+          $gameMap._displayX -= moveSpeed
           this.triggerX = TouchInput._x
         }
       }
       // scroll up
       if (nowTriggerY > this.triggerY ) {
         const distance = nowTriggerY - this.triggerY
-        if (distance > gridWidth){
+        if (distance > moveMinDistance){
           // const nowY = SceneManager._scene._spriteset._tilemap.origin.y - distance
           // SceneManager._scene._spriteset._tilemap.origin.y = nowY
           // if (nowY % 48 === 0){
           //     $gameMap.startScroll(2,1,10)
           // }
-          $gameMap.startScroll(8,1,10)
+          // $gameMap.startScroll(8,1,10)
+          $gameMap._displayY -= moveSpeed
           this.triggerY = TouchInput._y
         }
       }
@@ -103,13 +105,14 @@ Scene_Map.prototype.updateWorldMapScrollTouch = function() {
       // scroll right
       if (nowTriggerX < this.triggerX ) {
         const distance = this.triggerX - nowTriggerX
-        if (distance > gridWidth){
+        if (distance > moveMinDistance){
           // const nowX = SceneManager._scene._spriteset._tilemap.origin.x + distance
           // SceneManager._scene._spriteset._tilemap.origin.x = nowX
           // if (nowX % 48 === 0){
           //     $gameMap.startScroll(4,1,10)
           // }
-          $gameMap.startScroll(6,1,10)
+          // $gameMap.startScroll(6,1,10)
+          $gameMap._displayX += moveSpeed
           this.triggerX = TouchInput._x
 
         }
@@ -117,13 +120,14 @@ Scene_Map.prototype.updateWorldMapScrollTouch = function() {
       // scroll down
       if (nowTriggerY < this.triggerY ) {
         const distance = this.triggerY - nowTriggerY
-        if (distance > gridWidth){
+        if (distance > moveMinDistance){
           // const nowY = SceneManager._scene._spriteset._tilemap.origin.y + distance
           // SceneManager._scene._spriteset._tilemap.origin.y = nowY
           // if (nowY % 48 === 0){
           //     $gameMap.startScroll(8,1,10)
           // }
-          $gameMap.startScroll(2,1,10)
+          // $gameMap.startScroll(2,1,10)
+          $gameMap._displayY += moveSpeed
           this.triggerY = TouchInput._y
         }
       }
